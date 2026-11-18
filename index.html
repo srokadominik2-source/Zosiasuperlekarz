@@ -1,1 +1,361 @@
 
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 sekund — jej historia</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0c0a10;
+    color: #f8f2f6;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, #6b23442b, transparent 40%),
+        radial-gradient(circle at 80% 75%, #49295b30, transparent 45%);
+    z-index: -1;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    text-align: center;
+}
+
+.small-title {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #ce8fae;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 8vw, 82px);
+    font-weight: 500;
+    line-height: 1.05;
+}
+
+h1 span {
+    color: #d78eaf;
+    font-style: italic;
+}
+
+.subtitle {
+    color: #a9a0ae;
+    margin: 22px auto 40px;
+    max-width: 500px;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.card {
+    background: #ffffff06;
+    border: 1px solid #ffffff12;
+    border-radius: 24px;
+    padding: 40px 25px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 80px #0004;
+}
+
+.timer {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 16vw, 140px);
+    color: #f0b6d0;
+    line-height: 1;
+    margin-bottom: 10px;
+    transition: .3s;
+}
+
+.timer-label {
+    color: #928895;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.progress {
+    height: 3px;
+    background: #ffffff12;
+    width: 100%;
+    margin: 35px 0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #a15c82, #f1b4d0);
+    transition: width 1s linear;
+}
+
+.message {
+    min-height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(19px, 4vw, 27px);
+    line-height: 1.6;
+    color: #eee3ec;
+    padding: 10px;
+    transition: opacity .4s;
+}
+
+.counter {
+    margin-top: 15px;
+    color: #8e8494;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+button {
+    margin-top: 30px;
+    padding: 15px 32px;
+    border: 1px solid #d18bac80;
+    background: #b2658b20;
+    color: #f4dce9;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+button:hover {
+    background: #b2658b50;
+    transform: translateY(-2px);
+}
+
+.result {
+    display: none;
+    margin-top: 40px;
+    animation: appear 1.2s ease forwards;
+}
+
+.result h2 {
+    font-family: 'Playfair Display', serif;
+    color: #e7a8c5;
+    font-size: clamp(30px, 6vw, 55px);
+    margin-bottom: 15px;
+}
+
+.result p {
+    color: #bcb0be;
+    line-height: 1.8;
+}
+
+.result .four {
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    color: #f4c4dc;
+    margin: 15px 0;
+}
+
+.footer {
+    margin-top: 45px;
+    color: #6e6574;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.heart {
+    color: #cf82a7;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+.sparkle {
+    position: fixed;
+    color: #eab5d1;
+    opacity: .4;
+    animation: float 6s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); opacity: .2; }
+    50% { transform: translateY(-30px); opacity: .7; }
+}
+
+@media(max-width:600px) {
+    .card { padding: 30px 15px; }
+    .subtitle { font-size: 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sparkle" style="top:15%;left:12%">✦</div>
+<div class="sparkle" style="top:25%;right:15%;animation-delay:2s">✧</div>
+<div class="sparkle" style="bottom:15%;left:20%;animation-delay:3s">✦</div>
+<div class="sparkle" style="bottom:25%;right:10%;animation-delay:1s">✧</div>
+
+<section class="page">
+<div class="container">
+
+    <div class="small-title">A little reminder of how amazing you are</div>
+
+    <h1>15 <span>sekund.</span></h1>
+
+    <<p class="subtitle">
+        Niektóre osiągnięcia zajmują lata przygotowań.<br>
+        Ale czasami wystarczy 15 sekund,<br>
+        żeby udowodnić, ile jesteś warta.
+    </p>
+
+    <<div class="card">
+
+        <div class="timer" id="timer">15</div>
+        <div class="timer-label">sekund do wspomnienia</div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+
+        <<div class="message" id="message">
+            Gotowa? Kliknij i przeżyj te 15 sekund jeszcze raz.
+        </div>
+
+        <div class="counter" id="counter">15 / 15</div>
+
+        <button id="startBtn" onclick="startTimer()">
+            PRZEŻYJ TE 15 SEKUND
+        </button>
+
+        <div class="result" id="result">
+            <h2>Udało Ci się.</h2>
+            <p>Nie każdy potrafił. Nie każdemu się udało.</p>
+            <div class="four">4</div>
+            <p>
+                Jedna z czterech osób, którym udało się zdać szpilki
+                w zaledwie 15 sekund.<br><br>
+                I mam nadzieję, że nigdy nie zapomnisz,<br>
+                jak niesamowicie zdolną, silną i wyjątkową osobą jesteś.
+            </p>
+        </div>
+
+    </div>
+
+    <<div class="footer">
+        ZROBIONE Z <span class="heart">♥</span> DLA CIEBIE
+    </div>
+
+</div>
+</section>
+
+<script>
+const moments = [
+    "15 sekund. Wszystko zaczyna się właśnie teraz.",
+    "14... stres, ale nie poddajesz się.",
+    "13... skupiasz się na tym, co przed Tobą.",
+    "12... każdy szczegół ma znaczenie.",
+    "11... inni już dawno by zwątpili.",
+    "10... ale Ty dalej walczysz.",
+    "9... nie ma czasu na strach.",
+    "8... wiedza, którą zdobywałaś przez tyle godzin.",
+    "7... ręce robią swoje, umysł pracuje.",
+    "6... coraz bliżej.",
+    "5... nie poddajesz się.",
+    "4... jesteś naprawdę niesamowita.",
+    "3... jeszcze tylko chwila.",
+    "2... prawie!",
+    "1... ",
+    "15 sekund. ZDANE."
+];
+
+let running = false;
+
+function startTimer() {
+    if (running) return;
+
+    running = true;
+    let time = 15;
+
+    const timer = document.getElementById("timer");
+    const message = document.getElementById("message");
+    const progress = document.getElementById("progress");
+    const counter = document.getElementById("counter");
+    const button = document.getElementById("startBtn");
+    const result = document.getElementById("result");
+
+    result.style.display = "none";
+    button.disabled = true;
+    button.style.opacity = "0.5";
+    button.innerText = "TRWA ODLICZANIE...";
+    message.innerText = moments[0];
+    timer.innerText = time;
+    progress.style.width = "0%";
+
+    const interval = setInterval(() => {
+        time--;
+
+        timer.innerText = time;
+        counter.innerText = time + " / 15";
+        progress.style.width = ((15-time)/15*100) + "%";
+
+        message.style.opacity = "0";
+
+        setTimeout(() => {
+            message.innerText = moments[15-time];
+            message.style.opacity = "1";
+        }, 200);
+
+        if (time <= 0) {
+            clearInterval(interval);
+
+            timer.innerText = "♥";
+            timer.style.animation = "pulse 1s infinite";
+            counter.innerText = "OSIĄGNIĘCIE ODBLOKOWANE";
+            message.innerText = "I właśnie dlatego nigdy nie powinnaś w siebie wątpić.";
+            progress.style.width = "100%";
+
+            result.style.display = "block";
+
+            button.disabled = false;
+            button.style.opacity = "1";
+            button.innerText = "PRZEŻYJ JESZCZE RAZ";
+            running = false;
+        }
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
+
