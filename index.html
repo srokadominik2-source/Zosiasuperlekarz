@@ -516,16 +516,52 @@ function goToChemistry() {
 }
 
 // Powrót do pierwszej strony
+
+function goToFirstAid() {
+    const chemistryPage = document.getElementById("chemistryPage");
+    const firstaidPage = document.getElementById("firstaidPage");
+
+    chemistryPage.classList.add("fade-out");
+
+    setTimeout(() => {
+        chemistryPage.style.display = "none";
+        chemistryPage.classList.remove("fade-out");
+
+        firstaidPage.style.display = "flex";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 800);
+}
+
+function backToChemistry() {
+    const chemistryPage = document.getElementById("chemistryPage");
+    const firstaidPage = document.getElementById("firstaidPage");
+
+    firstaidPage.style.display = "none";
+    firstaidPage.style.opacity = "0";
+
+    chemistryPage.style.display = "flex";
+    chemistryPage.style.opacity = "1";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function backToStart() {
     const firstPage = document.getElementById("firstPage");
     const chemistryPage = document.getElementById("chemistryPage");
+    const firstaidPage = document.getElementById("firstaidPage");
 
     chemistryPage.style.display = "none";
+    firstaidPage.style.display = "none";
+
     chemistryPage.style.opacity = "0";
+    firstaidPage.style.opacity = "0";
 
     firstPage.style.display = "flex";
+    firstPage.style.opacity = "1";
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 }
 
 <!-- STRONA 3: PIERWSZA POMOC -->
