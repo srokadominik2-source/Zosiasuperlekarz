@@ -4,10 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>15 sekund — jej historia</title>
+<title>Historia wyjątkowej dziewczyny ❤️</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;0.600;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 * {
     margin: 0;
@@ -20,6 +20,7 @@ body {
     color: #f8f2f6;
     font-family: 'DM Sans', sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 body::before {
@@ -30,15 +31,21 @@ body::before {
         radial-gradient(circle at 20% 30%, #6b23442b, transparent 40%),
         radial-gradient(circle at 80% 75%, #49295b30, transparent 45%);
     z-index: -1;
+    pointer-events: none;
 }
 
 .page {
     min-height: 100vh;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
-    padding: 35px 20px;
-    transition: opacity .8s ease, transform .8s ease;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.page.active {
+    display: flex;
+    animation: appear 1s ease forwards;
 }
 
 .container {
@@ -59,7 +66,7 @@ h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(42px, 8vw, 82px);
     font-weight: 500;
-    line-height: 1.05;
+    line-height: 1.15;
 }
 
 h1 span {
@@ -71,7 +78,7 @@ h1 span {
     color: #a9a0ae;
     margin: 22px auto 40px;
     max-width: 500px;
-    line-height: 1.8;
+    line-height: 1.9;
     font-size: 15px;
 }
 
@@ -90,7 +97,6 @@ h1 span {
     color: #f0b6d0;
     line-height: 1;
     margin-bottom: 10px;
-    transition: .3s;
 }
 
 .timer-label {
@@ -126,7 +132,7 @@ h1 span {
     line-height: 1.6;
     color: #eee3ec;
     padding: 10px;
-    transition: opacity .4s;
+    transition: opacity .3s;
 }
 
 .counter {
@@ -147,21 +153,23 @@ button {
     font-size: 13px;
     letter-spacing: 1px;
     transition: .3s;
+    font-family: 'DM Sans', sans-serif;
 }
 
 button:hover {
     background: #b2658b50;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 button:disabled {
     cursor: default;
+    opacity: .5;
 }
 
 .result {
     display: none;
     margin-top: 40px;
-    animation: appear 1.2s ease forwards;
+    animation: appear 1s ease forwards;
 }
 
 .result h2 {
@@ -176,11 +184,43 @@ button:disabled {
     line-height: 1.8;
 }
 
-.result .four {
+.four {
     font-family: 'Playfair Display', serif;
-    font-size: 100px;
+    font-size: 110px;
     color: #f4c4dc;
     margin: 15px 0;
+}
+
+.achievement-card {
+    margin-top: 25px;
+    padding: 35px 25px;
+    border: 1px solid #d18bac40;
+    border-radius: 24px;
+    background: #ffffff05;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 80px #0004;
+}
+
+.achievement-card h2 {
+    font-family: 'Playfair Display', serif;
+    color: #e6a9c5;
+    font-size: clamp(28px, 5vw, 38px);
+    margin-bottom: 20px;
+}
+
+.achievement-card p {
+    color: #bdb2c0;
+    line-height: 1.9;
+    font-size: 15px;
+}
+
+.achievement-icon {
+    font-size: 65px;
+    margin: 20px 0;
+}
+
+.highlight {
+    color: #e6a9c5;
 }
 
 .footer {
@@ -194,44 +234,6 @@ button:disabled {
     color: #cf82a7;
 }
 
-.fade-out {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-.chemistry-page {
-    display: none;
-    opacity: 0;
-    animation: appear 1.2s ease forwards;
-}
-
-.chemistry-card {
-    margin-top: 25px;
-    padding: 35px 25px;
-    border: 1px solid #d18bac40;
-    border-radius: 24px;
-    background: #ffffff05;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 20px 80px #0004;
-}
-
-.chemistry-card h2 {
-    font-family: 'Playfair Display', serif;
-    color: #e6a9c5;
-    font-size: 38px;
-    margin-bottom: 20px;
-}
-
-.chemistry-card p {
-    color: #bdb2c0;
-    line-height: 1.9;
-}
-
-.chemistry-icon {
-    font-size: 65px;
-    margin: 20px 0;
-}
-
 .back-button {
     border-color: #ffffff20;
     background: transparent;
@@ -243,135 +245,143 @@ button:disabled {
     opacity: .4;
     animation: float 6s infinite ease-in-out;
     pointer-events: none;
+    z-index: -1;
 }
 
 @keyframes appear {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.04); }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
 }
 
 @keyframes float {
-    0%,100% { transform: translateY(0); opacity: .2; }
-    50% { transform: translateY(-30px); opacity: .7; }
+    0%, 100% {
+        transform: translateY(0);
+        opacity: .2;
+    }
+    50% {
+        transform: translateY(-30px);
+        opacity: .7;
+    }
 }
 
 @media(max-width:600px) {
-    .card { padding: 30px 15px; }
-    .subtitle { font-size: 14px; }
-    .chemistry-card h2 { font-size: 30px; }
-}
-/* ROZDZIAŁ 3 - PIERWSZA POMOC */
+    .card {
+        padding: 30px 15px;
+    }
 
-.firstaid-page {
-    display: none;
-    opacity: 0;
-    animation: appear 1.2s ease forwards;
-}
+    .achievement-card {
+        padding: 30px 18px;
+    }
 
-.firstaid-card {
-    margin-top: 25px;
-    padding: 35px 25px;
-    border: 1px solid #d18bac40;
-    border-radius: 24px;
-    background: #ffffff05;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 20px 80px #0004;
-}
+    .subtitle {
+        font-size: 14px;
+    }
 
-.firstaid-card h2 {
-    font-family: 'Playfair Display', serif;
-    color: #e6a9c5;
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-.firstaid-card p {
-    color: #bdb2c0;
-    line-height: 1.9;
-}
-
-.firstaid-icon {
-    font-size: 65px;
-    margin: 20px 0;
+    .achievement-card p {
+        font-size: 14px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- OZDOBY -->
 <div class="sparkle" style="top:15%;left:12%">✦</div>
 <div class="sparkle" style="top:25%;right:15%;animation-delay:2s">✧</div>
 <div class="sparkle" style="bottom:15%;left:20%;animation-delay:3s">✦</div>
 <div class="sparkle" style="bottom:25%;right:10%;animation-delay:1s">✧</div>
 
-<!-- STRONA 1: 15 SEKUND -->
-<section class="page" id="firstPage">
+<!-- ROZDZIAŁ 1: SZPILKI -->
+<section class="page active" id="firstPage">
 <div class="container">
 
-    <div class="small-title">Małe przypomnienie jak wspaniałym lekarzem zostaniesz.</div>
+    <div class="small-title">
+        A little reminder of how amazing you are
+    </div>
 
     <h1>15 <span>sekund.</span></h1>
 
     <p class="subtitle">
-        Innym przygotowywali sie do tego dniami i nocami.<br>
-        I tak nie zdali ,<br>
-        Ale ty zdalas i pokazalas kto tutaj rzadzi.
+        Niektóre osiągnięcia zajmują lata przygotowań.<br>
+        Ale czasami wystarczy 15 sekund,<br>
+        żeby udowodnić, ile jesteś warta.
     </p>
 
     <div class="card">
 
         <div class="timer" id="timer">15</div>
-        <div class="timer-label">sekund do wspomnienia</div>
+
+        <div class="timer-label">
+            sekund do wspomnienia
+        </div>
 
         <div class="progress">
             <div class="progress-bar" id="progress"></div>
         </div>
 
         <div class="message" id="message">
-            Gotowa? 15 sekund to tak mało.
+            Gotowa? Kliknij i przeżyj te 15 sekund jeszcze raz.
         </div>
 
-        <div class="counter" id="counter">15 / 15</div>
+        <div class="counter" id="counter">
+            15 / 15
+        </div>
 
         <button id="startBtn" onclick="startTimer()">
             PRZEŻYJ TE 15 SEKUND
         </button>
 
         <div class="result" id="result">
+
             <h2>Udało Ci się.</h2>
+
             <p>Nie każdy potrafił. Nie każdemu się udało.</p>
+
             <div class="four">4</div>
+
             <p>
-                Jedna z czterech osób, którym udało się zdać szpilki
-                w zaledwie 15 sekund.<br><br>
-                Jesteś niesamowita i mam nadzieję, że nigdy
-                nie przestaniesz w siebie wierzyć i uwierzysz w siebie tak mocno jak ja w ciebie.
+                Jedna z czterech osób, którym udało się zdać
+                szpilki w zaledwie 15 sekund.<br><br>
+
+                Jesteś niesamowita i mam nadzieję,
+                że nigdy nie przestaniesz w siebie wierzyć.
             </p>
 
-            <button onclick="goToChemistry()">
+            <button onclick="goToPage('chemistryPage')">
                 KOLEJNE OSIĄGNIĘCIE →
             </button>
+
         </div>
 
     </div>
 
     <div class="footer">
-        
+        ZROBIONE Z <span class="heart">♥</span> DLA CIEBIE
     </div>
 
 </div>
 </section>
 
-<!-- STRONA 2: CHEMIA -->
-<section class="page chemistry-page" id="chemistryPage">
+
+<!-- ROZDZIAŁ 2: CHEMIA -->
+<section class="page" id="chemistryPage">
 <div class="container">
 
-    <div class="small-title">Rozdział drugi · kolejne zwycięstwo</div>
+    <div class="small-title">
+        Rozdział drugi · kolejne zwycięstwo
+    </div>
 
     <h1>Kolejny <span>zdany.</span></h1>
 
@@ -380,195 +390,60 @@ button:disabled {
         z której powinnaś być dumna.
     </p>
 
-    <div class="chemistry-card">
+    <div class="achievement-card">
 
-        <div class="chemistry-icon">⚗️</div>
+        <div class="achievement-icon">⚗️</div>
 
         <h2>Kolos z chemii.</h2>
 
         <p>
             Kolejne godziny nauki.<br>
             Kolejne rzeczy, które trzeba było zapamiętać.<br>
-            Ale koniec konców jest to mój kolejny powód do dumy.<br><br>
+            Kolejny stres przed wejściem.<br><br>
 
-            A potem wynik — <span style="color:#e6a9c5">ZDANY.</span><br><br>
+            A potem wynik — <span class="highlight">ZDANY.</span>
         </p>
 
-        <h2 style="font-size:30px;">I znów dałaś radę.</h2>
+        <br>
+
+        <h2>I znów dałaś radę.</h2>
 
         <p>
-            Jesteś tak piekielnie madra Zosiu a ten kolos.<br>
+            Może dla innych to tylko zaliczony kolos.<br>
             Dla mnie to kolejny dowód na to,<br>
             jak bardzo jesteś zdolna i ile potrafisz osiągnąć.<br><br>
 
-            Jestem z ciebie tak CHOLERNIE DUMNY,<br>
-            gdy Ty sama nie widzisz powodu, żeby być dumna i mi dajesz głupie wymówki.
+            Jestem dumny z Ciebie. Nawet wtedy,<br>
+            gdy Ty sama nie widzisz powodu, żeby być dumna.
         </p>
 
     </div>
 
-   <button onclick="goToFirstAid()">
-    KOLEJNE OSIĄGNIĘCIE →
-</button>
+    <button onclick="goToPage('firstaidPage')">
+        KOLEJNE OSIĄGNIĘCIE →
+    </button>
 
-<br>
+    <br>
 
-<button class="back-button" onclick="backToStart()">
-    ← WRÓĆ DO 15 SEKUND
-</button>
+    <button class="back-button" onclick="goToPage('firstPage')">
+        ← WRÓĆ DO 15 SEKUND
+    </button>
+
     <div class="footer">
-        Zosia to najlepszy lekarz na świecie
+        ZROBIONE Z <span class="heart">♥</span> DLA CIEBIE
     </div>
 
 </div>
 </section>
 
-<script>
-const moments = [
-    "15 sekund. Wszystko zaczyna się właśnie teraz.",
-    "14... stres, ale nie poddajesz się.",
-    "13... skupiasz się na tym, co przed Tobą.",
-    "12... każdy szczegół ma znaczenie.",
-    "11... inni już dawno by zwątpili.",
-    "10... ale Ty dalej walczysz.",
-    "9... nie ma czasu na strach.",
-    "8... wiedza, którą zdobywałaś przez tyle godzin.",
-    "7... Z umysłu wydobywa sie para.",
-    "6... coraz bliżej.",
-    "5... nie poddajesz się.",
-    "4... Fiodor łapie sie za głowe i nie wierzy jak dobrze ci idzie.",
-    "3... jeszcze tylko chwila.",
-    "2... prawie!",
-    "1... ",
-    "15 sekund. ZDANE!"
-];
 
-let running = false;
-
-function startTimer() {
-    if (running) return;
-
-    running = true;
-    let time = 15;
-
-    const timer = document.getElementById("timer");
-    const message = document.getElementById("message");
-    const progress = document.getElementById("progress");
-    const counter = document.getElementById("counter");
-    const button = document.getElementById("startBtn");
-    const result = document.getElementById("result");
-
-    result.style.display = "none";
-    button.disabled = true;
-    button.style.opacity = "0.5";
-    button.innerText = "TRWA ODLICZANIE...";
-    message.innerText = moments[0];
-    timer.innerText = time;
-    progress.style.width = "0%";
-
-    const interval = setInterval(() => {
-        time--;
-
-        timer.innerText = time;
-        counter.innerText = time + " / 15";
-        progress.style.width = ((15 - time) / 15 * 100) + "%";
-
-        message.style.opacity = "0";
-
-        setTimeout(() => {
-            message.innerText = moments[15 - time];
-            message.style.opacity = "1";
-        }, 200);
-
-        if (time <= 0) {
-            clearInterval(interval);
-
-            timer.innerText = "♥";
-            timer.style.animation = "pulse 1s infinite";
-            counter.innerText = "OSIĄGNIĘCIE ODBLOKOWANE";
-            message.innerText = "I właśnie dlatego nigdy nie powinnaś w siebie wątpić.";
-            progress.style.width = "100%";
-
-            result.style.display = "block";
-
-            button.disabled = false;
-            button.style.opacity = "1";
-            button.innerText = "PRZEŻYJ JESZCZE RAZ";
-            running = false;
-        }
-    }, 1000);
-}
-
-// Przejście do chemii
-function goToChemistry() {
-    const firstPage = document.getElementById("firstPage");
-    const chemistryPage = document.getElementById("chemistryPage");
-
-    firstPage.classList.add("fade-out");
-
-    setTimeout(() => {
-        firstPage.style.display = "none";
-        firstPage.classList.remove("fade-out");
-
-        chemistryPage.style.display = "flex";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 800);
-}
-
-// Powrót do pierwszej strony
-
-function goToFirstAid() {
-    const chemistryPage = document.getElementById("chemistryPage");
-    const firstaidPage = document.getElementById("firstaidPage");
-
-    chemistryPage.classList.add("fade-out");
-
-    setTimeout(() => {
-        chemistryPage.style.display = "none";
-        chemistryPage.classList.remove("fade-out");
-
-        firstaidPage.style.display = "flex";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 800);
-}
-
-function backToChemistry() {
-    const chemistryPage = document.getElementById("chemistryPage");
-    const firstaidPage = document.getElementById("firstaidPage");
-
-    firstaidPage.style.display = "none";
-    firstaidPage.style.opacity = "0";
-
-    chemistryPage.style.display = "flex";
-    chemistryPage.style.opacity = "1";
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function backToStart() {
-    const firstPage = document.getElementById("firstPage");
-    const chemistryPage = document.getElementById("chemistryPage");
-    const firstaidPage = document.getElementById("firstaidPage");
-
-    chemistryPage.style.display = "none";
-    firstaidPage.style.display = "none";
-
-    chemistryPage.style.opacity = "0";
-    firstaidPage.style.opacity = "0";
-
-    firstPage.style.display = "flex";
-    firstPage.style.opacity = "1";
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-}
-
-<!-- STRONA 3: PIERWSZA POMOC -->
-<section class="page firstaid-page" id="firstaidPage">
+<!-- ROZDZIAŁ 3: PIERWSZA POMOC -->
+<section class="page" id="firstaidPage">
 <div class="container">
 
-    <div class="small-title">Rozdział trzeci · kolejny powód do dumy</div>
+    <div class="small-title">
+        Rozdział trzeci · kolejny powód do dumy
+    </div>
 
     <h1>Kolejne <span>zwycięstwo.</span></h1>
 
@@ -577,9 +452,9 @@ function backToStart() {
         niż tylko zaliczenie na studiach.
     </p>
 
-    <div class="firstaid-card">
+    <div class="achievement-card">
 
-        <div class="firstaid-icon">🩺</div>
+        <div class="achievement-icon">🩺</div>
 
         <h2>Pierwsza pomoc.</h2>
 
@@ -588,12 +463,12 @@ function backToStart() {
             Kolejna dawka wiedzy, stresu i przygotowań.<br>
             Kolejny raz udowodniłaś, że potrafisz dać sobie radę.<br><br>
 
-            <span style="color:#e6a9c5">ZALICZONE.</span>
+            <span class="highlight">ZALICZONE.</span>
         </p>
 
         <br>
 
-        <h2 style="font-size:30px;">I to nie jest zwykłe zaliczenie.</h2>
+        <h2>I to nie jest zwykłe zaliczenie.</h2>
 
         <p>
             Uczysz się rzeczy, które mogą kiedyś pomóc<br>
@@ -612,13 +487,13 @@ function backToStart() {
 
     </div>
 
-    <button class="back-button" onclick="backToChemistry()">
+    <button class="back-button" onclick="goToPage('chemistryPage')">
         ← WRÓĆ DO CHEMII
     </button>
 
     <br>
 
-    <button class="back-button" onclick="backToStart()">
+    <button class="back-button" onclick="goToPage('firstPage')">
         ← WRÓĆ NA SAM POCZĄTEK
     </button>
 
@@ -628,6 +503,135 @@ function backToStart() {
 
 </div>
 </section>
+
+
+<script>
+
+// ODLICZANIE 15 SEKUND
+
+const moments = [
+    "15 sekund. Wszystko zaczyna się właśnie teraz.",
+    "14... stres, ale nie poddajesz się.",
+    "13... skupiasz się na tym, co przed Tobą.",
+    "12... każdy szczegół ma znaczenie.",
+    "11... inni już dawno by zwątpili.",
+    "10... ale Ty dalej walczysz.",
+    "9... nie ma czasu na strach.",
+    "8... wiedza, którą zdobywałaś przez tyle godzin.",
+    "7... ręce robią swoje, umysł pracuje.",
+    "6... coraz bliżej.",
+    "5... nie poddajesz się.",
+    "4... jesteś naprawdę niesamowita.",
+    "3... jeszcze tylko chwila.",
+    "2... prawie!",
+    "1... ",
+    "15 sekund. ZDANE!"
+];
+
+let running = false;
+let interval = null;
+
+function startTimer() {
+
+    if (running) return;
+
+    running = true;
+
+    let time = 15;
+
+    const timer = document.getElementById("timer");
+    const message = document.getElementById("message");
+    const progress = document.getElementById("progress");
+    const counter = document.getElementById("counter");
+    const button = document.getElementById("startBtn");
+    const result = document.getElementById("result");
+
+    result.style.display = "none";
+
+    timer.style.animation = "none";
+    timer.innerText = "15";
+
+    button.disabled = true;
+    button.innerText = "TRWA ODLICZANIE...";
+
+    message.innerText = moments[0];
+    counter.innerText = "15 / 15";
+    progress.style.width = "0%";
+
+    interval = setInterval(() => {
+
+        time--;
+
+        timer.innerText = time;
+        counter.innerText = time + " / 15";
+
+        progress.style.width =
+            ((15 - time) / 15 * 100) + "%";
+
+        message.style.opacity = "0";
+
+        setTimeout(() => {
+            message.innerText = moments[15 - time];
+            message.style.opacity = "1";
+        }, 200);
+
+        if (time <= 0) {
+
+            clearInterval(interval);
+            interval = null;
+
+            timer.innerText = "♥";
+            timer.style.animation = "pulse 1s infinite";
+
+            counter.innerText = "OSIĄGNIĘCIE ODBLOKOWANE";
+
+            message.innerText =
+                "I właśnie dlatego nigdy nie powinnaś w siebie wątpić.";
+
+            progress.style.width = "100%";
+
+            result.style.display = "block";
+
+            button.disabled = false;
+            button.innerText = "PRZEŻYJ JESZCZE RAZ";
+
+            running = false;
+        }
+
+    }, 1000);
+}
+
+
+// PRZECHODZENIE MIĘDZY ROZDZIAŁAMI
+
+function goToPage(pageId) {
+
+    if (running) return;
+
+    const currentPage = document.querySelector(".page.active");
+    const nextPage = document.getElementById(pageId);
+
+    if (!currentPage || !nextPage || currentPage === nextPage) {
+        return;
+    }
+
+    currentPage.classList.remove("active");
+
+    setTimeout(() => {
+
+        currentPage.style.display = "none";
+
+        nextPage.style.display = "flex";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
+
+        nextPage.classList.add("active");
+
+    }, 350);
+}
 
 </script>
 
